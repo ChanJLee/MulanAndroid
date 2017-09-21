@@ -12,3 +12,7 @@ JavaString2RawStringHolder::JavaString2RawStringHolder(JNIEnv *env, jstring &jav
         mJavaString(javaString), mJNIEnv(env) {
     mRawString = (*mJNIEnv).GetStringUTFChars(javaString, nullptr);
 }
+
+Text JavaString2RawStringHolder::toRawString() {
+    return Text(mRawString);
+}

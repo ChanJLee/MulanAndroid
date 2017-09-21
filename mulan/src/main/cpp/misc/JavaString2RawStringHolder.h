@@ -15,6 +15,8 @@ class JavaString2RawStringHolder {
 public:
     JavaString2RawStringHolder(JNIEnv *, jstring &);
 
+    Text toRawString();
+
     virtual ~JavaString2RawStringHolder();
 };
 

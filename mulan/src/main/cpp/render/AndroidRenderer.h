@@ -5,11 +5,16 @@
 #ifndef MARKDOWNPARSER_ANDROIDRENDERER_H
 #define MARKDOWNPARSER_ANDROIDRENDERER_H
 
-
+#include <jni.h>
 #include "MiddlewareRenderer.h"
+
 class AndroidRenderer : public MiddlewareRenderer
 {
+	JNIEnv* mJNIEnv;
+	jobject& mJavaRenderer;
 public:
+	AndroidRenderer(JNIEnv *mJNIEnv, jobject &mJavaRenderer);
+
 	void begin() override;
 	void end() override;
 	void renderTitle(RENDERER_UNIT unit, const Text &content) override;

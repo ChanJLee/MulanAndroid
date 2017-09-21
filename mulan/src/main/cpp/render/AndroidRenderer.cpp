@@ -47,3 +47,7 @@ void AndroidRenderer::renderReference(const Text &content)
 {
 
 }
+
+AndroidRenderer::AndroidRenderer(JNIEnv *mJNIEnv, jobject &mJavaRenderer) : mJNIEnv(mJNIEnv),
+                                                                            mJavaRenderer(
+                                                                                    mJavaRenderer) {}
