@@ -13,8 +13,8 @@ cmake_minimum_required(VERSION 3.4.1)
 set(SOURCE_FILES
     src/main/cpp/com_chan_mulan_Mulan.h
     src/main/cpp/com_chan_mulan_Mulan.cpp
-    src/main/cpp/JavaString2RowStringHolder.h
-    src/main/cpp/JavaString2RowStringHolder.cpp
+    src/main/cpp/misc/JavaString2RawStringHolder.h
+    src/main/cpp/misc/JavaString2RawStringHolder.cpp
     src/main/cpp/symbol/Symbol.h
     src/main/cpp/lexica/LexicalParser.cpp
     src/main/cpp/lexica/LexicalParser.h

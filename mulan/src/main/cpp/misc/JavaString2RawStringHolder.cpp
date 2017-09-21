@@ -4,11 +4,11 @@
 
 #include "JavaString2RawStringHolder.h"
 
-JavaString2RowStringHolder::~JavaString2RowStringHolder() {
+JavaString2RawStringHolder::~JavaString2RawStringHolder() {
     (*mJNIEnv).ReleaseStringUTFChars(mJavaString, mRawString);
 }
 
-JavaString2RowStringHolder::JavaString2RowStringHolder(JNIEnv *env, jstring &javaString) :
+JavaString2RawStringHolder::JavaString2RawStringHolder(JNIEnv *env, jstring &javaString) :
         mJavaString(javaString), mJNIEnv(env) {
     mRawString = (*mJNIEnv).GetStringUTFChars(javaString, nullptr);
 }

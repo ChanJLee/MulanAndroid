@@ -8,14 +8,14 @@
 #include <jni.h>
 #include "../token/Token.h"
 
-class JavaString2RowStringHolder {
+class JavaString2RawStringHolder {
     const char *mRawString;
     jstring &mJavaString;
     JNIEnv* mJNIEnv;
 public:
-    JavaString2RowStringHolder(JNIEnv *, jstring &);
+    JavaString2RawStringHolder(JNIEnv *, jstring &);
 
-    virtual ~JavaString2RowStringHolder();
+    virtual ~JavaString2RawStringHolder();
 };
 
 
