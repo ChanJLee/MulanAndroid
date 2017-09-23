@@ -1,5 +1,6 @@
 package com.chan.mulan.view;
 
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,12 +11,14 @@ import com.chan.mulan.data.TextureData;
  * Created by chan on 2017/9/21.
  */
 
-public class ReferenceView extends MarkdownView {
+public class TextureView extends MarkdownView {
+
 	private TextView mTextView;
 
-	public ReferenceView(View itemView) {
+	public TextureView(View itemView) {
 		super(itemView);
 		mTextView = (TextView) itemView;
+		mTextView.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 	@Override

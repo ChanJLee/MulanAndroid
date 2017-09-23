@@ -5,4 +5,9 @@ package com.chan.mulan.data;
  */
 
 public class UnorderedListItemData extends Data {
+	public CharSequence texture;
+
+	public UnorderedListItemData() {
+		super(Data.TYPE_UNORDERED_LIST_ITEM);
+	}
 }

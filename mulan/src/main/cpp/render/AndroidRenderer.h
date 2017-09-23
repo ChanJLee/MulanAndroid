@@ -24,6 +24,15 @@ class AndroidRenderer : public MiddlewareRenderer {
     jmethodID mRenderImageId;
     jmethodID mRenderReferenceId;
 
+    jint mTitleSize1;
+    jint mTitleSize2;
+    jint mTitleSize3;
+    jint mTitleSize4;
+    jint mTitleSize5;
+
+    jint mTypefaceBold;
+    jint mTypefaceItalic;
+
 public:
     AndroidRenderer(JNIEnv *mJNIEnv, jobject &mJavaRenderer);
 

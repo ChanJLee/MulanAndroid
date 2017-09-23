@@ -11,7 +11,7 @@ import com.chan.mulan.renderer.MarkdownRenderer;
 public class Mulan {
 
 	static {
-		System.loadLibrary("mulan.so");
+		System.loadLibrary("mulan");
 	}
 
 	public static void render(String markdown, RecyclerView recyclerView) {

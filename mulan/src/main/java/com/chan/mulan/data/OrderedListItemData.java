@@ -5,4 +5,9 @@ package com.chan.mulan.data;
  */
 
 public class OrderedListItemData extends Data {
+	public CharSequence texture;
+
+	public OrderedListItemData() {
+		super(Data.TYPE_ORDERED_LIST_ITEM);
+	}
 }
