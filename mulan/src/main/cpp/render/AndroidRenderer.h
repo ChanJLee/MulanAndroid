@@ -8,26 +8,47 @@
 #include <jni.h>
 #include "MiddlewareRenderer.h"
 
-class AndroidRenderer : public MiddlewareRenderer
-{
-	JNIEnv* mJNIEnv;
-	jobject& mJavaRenderer;
-public:
-	AndroidRenderer(JNIEnv *mJNIEnv, jobject &mJavaRenderer);
+class AndroidRenderer : public MiddlewareRenderer {
+    JNIEnv *mJNIEnv;
+    jobject &mJavaRenderer;
+    jclass mJavaClass;
+    jmethodID mBeginId;
+    jmethodID mEndId;
+    jmethodID mRenderTitleId;
+    jmethodID mRenderTextureId;
+    jmethodID mRenderTypefaceId;
+    jmethodID mRenderOrderedListId;
+    jmethodID mRenderUnorderedListId;
+    jmethodID mRenderNewLineId;
+    jmethodID mRenderLinkId;
+    jmethodID mRenderImageId;
+    jmethodID mRenderReferenceId;
 
-	void begin() override;
-	void end() override;
-	void renderTitle(RENDERER_UNIT unit, const Text &content) override;
-	void renderTexture(const Text &content) override;
-	void renderTypeface(RENDERER_UNIT unit, const Text &content) override;
-	void renderOrderList(const Text &num, const Text &content) override;
-	void renderUnorderedList(const Text &content) override;
-	void renderNewLine() override;
-	void renderImage(const Text &label, const Text &url) override;
-	void renderLink(const Text &label, const Text &url) override;
-	void renderReference(const Text &content) override;
+public:
+    AndroidRenderer(JNIEnv *mJNIEnv, jobject &mJavaRenderer);
+
+    void begin() override;
+
+    void end() override;
+
+    void renderTitle(RENDERER_UNIT unit, const Text &content) override;
+
+    void renderTexture(const Text &content) override;
+
+    void renderTypeface(RENDERER_UNIT unit, const Text &content) override;
+
+    void renderOrderedList(const Text &num, const Text &content) override;
+
+    void renderUnorderedList(const Text &content) override;
+
+    void renderNewLine() override;
+
+    void renderImage(const Text &label, const Text &url) override;
+
+    void renderLink(const Text &label, const Text &url) override;
+
+    void renderReference(const Text &content) override;
 
 };
-
 
 #endif //MARKDOWNPARSER_ANDROIDRENDERER_H

@@ -52,7 +52,7 @@ void HtmlRenderer::renderTypeface(RENDERER_UNIT unit, const Text &content)
 
 	mStringBuilder << "<i>" << content << "</i>";
 }
-void HtmlRenderer::renderOrderList(const Text &num, const Text &content)
+void HtmlRenderer::renderOrderedList(const Text &num, const Text &content)
 {
 	mStringBuilder << "<p><b>" << num << ". " << "</b>" << content << "</p>";
 }

@@ -155,7 +155,7 @@ void GrammarParser::handleNumber(TokenStream::const_iterator &it)
 		//render order list
 		std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer)
 		{
-			renderer->renderOrderList((*it)->text, (*nextToken)->text);
+            renderer->renderOrderedList((*it)->text, (*nextToken)->text);
 		});
 		it = nextToken;
 		return;

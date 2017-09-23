@@ -21,7 +21,7 @@ public:
 	void renderTitle(RENDERER_UNIT unit, const Text & content) override;
 	void renderTexture(const Text &content) override;
 	void renderTypeface(RENDERER_UNIT unit, const Text &content) override;
-	void renderOrderList(const Text &num, const Text &content) override;
+	void renderOrderedList(const Text &num, const Text &content) override;
 	void renderNewLine() override;
 	void renderImage(const Text &label, const Text &url) override;
 	void renderLink(const Text &label, const Text &url) override;

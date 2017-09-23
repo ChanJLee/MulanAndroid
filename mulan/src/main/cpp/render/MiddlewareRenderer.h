@@ -21,7 +21,7 @@ public:
 	virtual void renderTitle(RENDERER_UNIT unit, const Text &content) = 0;
 	virtual void renderTexture(const Text &content) = 0;
 	virtual void renderTypeface(RENDERER_UNIT unit, const Text &content) = 0;
-	virtual void renderOrderList(const Text &num, const Text &content) = 0;
+	virtual void renderOrderedList(const Text &num, const Text &content) = 0;
 	virtual void renderUnorderedList(const Text &content) = 0;
 	virtual void renderNewLine() = 0;
 	virtual void renderImage(const Text &label, const Text &url) = 0;

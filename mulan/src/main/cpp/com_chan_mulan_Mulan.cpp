@@ -8,6 +8,7 @@
 #include "misc/JavaString2RawStringHolder.h"
 #include "render/AndroidRenderer.h"
 
+#ifdef __cplusplus
 extern "C" {
 #endif
 /*
@@ -17,7 +18,8 @@ extern "C" {
  */
 JNIEXPORT void JNICALL Java_com_chan_mulan_Mulan_render
         (JNIEnv *env, jclass, jstring markdown, jobject renderer) {
-    LexicalParser lexicalParser(JavaString2RawStringHolder(env, markdown).toRawString());
+    JavaString2RawStringHolder javaString2RawStringHolder(env, markdown);
+    LexicalParser lexicalParser(javaString2RawStringHolder.toRawString());
     TokenStream tokenStream = lexicalParser.build();
     GrammarParser grammarParser(tokenStream);
     MiddlewareRenderer *middlewareRenderer = new AndroidRenderer(env, renderer);
@@ -29,3 +31,4 @@ JNIEXPORT void JNICALL Java_com_chan_mulan_Mulan_render
 
 #ifdef __cplusplus
 }
+#endif

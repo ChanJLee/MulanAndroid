@@ -33,7 +33,7 @@ public class MarkdownRenderer {
 
 	}
 
-	public void renderOrderList(String orderNum, String content) {
+	public void renderOrderedList(String orderNum, String content) {
 
 	}
 
