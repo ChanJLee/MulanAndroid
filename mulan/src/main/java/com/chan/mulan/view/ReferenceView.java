@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chan.mulan.data.Data;
-import com.chan.mulan.data.TextureData;
+import com.chan.mulan.data.ReferenceData;
 
 /**
  * Created by chan on 2017/9/21.
@@ -20,7 +20,7 @@ public class ReferenceView extends MarkdownView {
 
 	@Override
 	public void render(Data data) {
-		TextureData textureData = (TextureData) data;
-		mTextView.setText(textureData.texture);
+		ReferenceData referenceData = (ReferenceData) data;
+		mTextView.setText(referenceData.texture);
 	}
 }
