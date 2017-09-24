@@ -29,6 +29,7 @@ private:
 	void handleString(TokenStream::const_iterator &it);
 	void handleNumber(TokenStream::const_iterator &it);
 	bool isLineFirst(TokenStream::const_iterator &it);
+	bool isLineEnd(TokenStream::const_iterator &it, int offset);
 	void handleNewLine();
 	bool checkToken(TokenStream::const_iterator &it, int offset, SYMBOL_TYPE type);
 	void handleReference(TokenStream::const_iterator &it);

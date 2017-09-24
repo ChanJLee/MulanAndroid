@@ -5,9 +5,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Keep;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.style.ClickableSpan;
 import android.util.Log;
-import android.view.View;
 
 import com.chan.mulan.R;
 import com.chan.mulan.adapter.MarkdownAdapter;
@@ -20,6 +18,7 @@ import com.chan.mulan.data.TextureData;
 import com.chan.mulan.data.TitleData;
 import com.chan.mulan.data.UnorderedListItemData;
 import com.chan.mulan.misc.SpannableBuilder;
+import com.chan.mulan.span.LinkSpan;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -168,7 +167,7 @@ public class MarkdownRenderer {
 		mDataList.add(imageData);
 	}
 
-	public void renderLink(String label, final String url) {
+	public void renderLink(String label, String url) {
 		d("renderLink label: " + label + " url " + url);
 		TextureData lastTextureData = null;
 		if (!mDataList.isEmpty() && mDataList.get(mDataList.size() - 1) instanceof TextureData) {
@@ -179,12 +178,7 @@ public class MarkdownRenderer {
 			lastTextureData.texture = new SpannableBuilder(lastTextureData.texture)
 					.nextSpannable(" ")
 					.nextSpannable(label)
-					.setClickable(new ClickableSpan() {
-						@Override
-						public void onClick(View view) {
-							d("clicked" + url);
-						}
-					})
+					.setClickable(new LinkSpan(url))
 					.nextSpannable(" ")
 					.finish();
 			return;
@@ -192,12 +186,7 @@ public class MarkdownRenderer {
 
 		lastTextureData = new TextureData();
 		lastTextureData.texture = new SpannableBuilder(label)
-				.setClickable(new ClickableSpan() {
-					@Override
-					public void onClick(View view) {
-						d("clicked" + url);
-					}
-				})
+				.setClickable(new LinkSpan(url))
 				.nextSpannable(" ")
 				.finish();
 		mDataList.add(lastTextureData);
