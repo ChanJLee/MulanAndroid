@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 		RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-		InputStream inputStream = getResources().openRawResource(R.raw.etc);
+		InputStream inputStream = getResources().openRawResource(R.raw.simple);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 		String content = null;
 		StringBuilder stringBuilder = new StringBuilder();

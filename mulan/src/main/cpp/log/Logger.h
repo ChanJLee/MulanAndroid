@@ -2,10 +2,16 @@
 // Created by chan on 2017/9/4.
 //
 
+#ifdef  DEBUG
 #include <iostream>
+#endif
 
-template <typename T>
-inline void log(const char *tag, T message)
-{
-	std::cout << tag << message << std::endl;
-}
+#ifdef LOG_D
+#undef LOG_D
+#endif
+
+#ifdef DEBUG
+#define LOG_D(tag, message) std::cout << (tag) << " " << (message) << std::endl;
+#else
+#define LOG_D
+#endif

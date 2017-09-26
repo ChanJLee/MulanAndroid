@@ -5,6 +5,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Keep;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.chan.mulan.R;
 import com.chan.mulan.adapter.MarkdownAdapter;
@@ -73,6 +74,7 @@ public class MarkdownRenderer {
 	}
 
 	public void renderTitle(@TitleSize int titleSize, String title) {
+		d("title:  " + title);
 		TitleData titleData = new TitleData();
 		float textSize = 0;
 		if (titleSize == TITLE_SIZE_1) {
@@ -96,6 +98,7 @@ public class MarkdownRenderer {
 	}
 
 	public void renderTexture(String text) {
+		d("renderTexture: text " + text);
 		TextureData textureData = new TextureData();
 		textureData.texture = new SpannableBuilder(text)
 				.finish();
@@ -103,6 +106,7 @@ public class MarkdownRenderer {
 	}
 
 	public void renderTypeface(@Typeface int typeface, String text) {
+		d("renderTypeface: typeface " + typeface + " text " + text);
 		TextureData lastTextureData = null;
 		if (!mDataList.isEmpty() && mDataList.get(mDataList.size() - 1) instanceof TextureData) {
 			lastTextureData = (TextureData) mDataList.get(mDataList.size() - 1);
@@ -127,6 +131,7 @@ public class MarkdownRenderer {
 	}
 
 	public void renderOrderedList(String orderNum, String content) {
+		d("renderOrderedList: order num " + orderNum + " content " + content);
 		OrderedListItemData itemData = new OrderedListItemData();
 		itemData.texture = new SpannableBuilder(orderNum)
 				.setTypeface(android.graphics.Typeface.BOLD)
@@ -138,6 +143,7 @@ public class MarkdownRenderer {
 	}
 
 	public void renderUnorderedList(String content) {
+		d("renderUnorderedList: " + content);
 		UnorderedListItemData itemData = new UnorderedListItemData();
 		itemData.texture = new SpannableBuilder("• ")
 				.setTypeface(android.graphics.Typeface.BOLD)
@@ -147,10 +153,12 @@ public class MarkdownRenderer {
 	}
 
 	public void renderNewLine() {
+		d("new line");
 		mDataList.add(new NewLineData());
 	}
 
 	public void renderImage(String label, String url) {
+		d("image: label: " + label + " url " + url);
 		ImageData imageData = new ImageData();
 		imageData.image = url;
 		imageData.label = label;
@@ -158,6 +166,7 @@ public class MarkdownRenderer {
 	}
 
 	public void renderLink(String label, String url) {
+		d("link: label: " + label + " url " + url);
 		TextureData lastTextureData = null;
 		if (!mDataList.isEmpty() && mDataList.get(mDataList.size() - 1) instanceof TextureData) {
 			lastTextureData = (TextureData) mDataList.get(mDataList.size() - 1);
@@ -182,8 +191,13 @@ public class MarkdownRenderer {
 	}
 
 	public void renderReference(String content) {
+		d("reference: " + content);
 		ReferenceData referenceData = new ReferenceData();
 		referenceData.texture = content;
 		mDataList.add(referenceData);
+	}
+
+	private static void d(String message) {
+		Log.d(TAG, message);
 	}
 }

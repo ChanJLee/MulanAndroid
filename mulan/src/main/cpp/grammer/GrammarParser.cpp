@@ -28,7 +28,7 @@ void GrammarParser::parse() {
         renderer->begin();
     });
 
-    for (TokenStream::const_iterator iterator = mTokenStream.cbegin();
+    for (Iterator iterator = mTokenStream.cbegin();
          iterator < mTokenStream.cend(); ++iterator) {
         Token *token = *iterator;
         if (token->type == SYMBOL_TYPE::HASH) {
@@ -57,7 +57,7 @@ void GrammarParser::parse() {
     });
 }
 
-void GrammarParser::handleHash(TokenStream::const_iterator &it) {
+void GrammarParser::handleHash(Iterator &it) {
     if (isLineFirst(it) &&
         checkToken(it, 1, SYMBOL_TYPE::BLANK) &&
         checkToken(it, 2, SYMBOL_TYPE::STRING) && checkToken(it, 3, SYMBOL_TYPE::NEW_LINE)) {
@@ -81,7 +81,7 @@ void GrammarParser::handleHash(TokenStream::const_iterator &it) {
         }
 
         //将读取指针后移
-        TokenStream::const_iterator nextToken = it + 2;
+        Iterator nextToken = it + 2;
         std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
             renderer->renderTitle(unit, (*nextToken)->text);
         });
@@ -89,10 +89,10 @@ void GrammarParser::handleHash(TokenStream::const_iterator &it) {
         return;
     }
 
-    handleString(it);
+    handleError(it);
 }
 
-void GrammarParser::handleStar(TokenStream::const_iterator &it) {
+void GrammarParser::handleStar(Iterator &it) {
     if (!checkToken(it, 1, SYMBOL_TYPE::STRING) && !checkToken(it, 1, SYMBOL_TYPE::STAR)) {
         handleString(it);
         return;
@@ -111,7 +111,7 @@ void GrammarParser::handleStar(TokenStream::const_iterator &it) {
             unit = RENDERER_UNIT::ITALIC;
         }
 
-        TokenStream::const_iterator nextToken = it + 1;
+        Iterator nextToken = it + 1;
         it += 2;
 
         std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
@@ -120,10 +120,10 @@ void GrammarParser::handleStar(TokenStream::const_iterator &it) {
         return;
     }
 
-    handleString(it);
+    handleError(it);
 }
 
-void GrammarParser::handleString(TokenStream::const_iterator &it) {
+void GrammarParser::handleString(Iterator &it) {
     std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
         renderer->renderTexture((*it)->text);
     });
@@ -133,14 +133,14 @@ void GrammarParser::handleString(TokenStream::const_iterator &it) {
     }
 }
 
-void GrammarParser::handleNumber(TokenStream::const_iterator &it) {
+void GrammarParser::handleNumber(Iterator &it) {
     if (isLineFirst(it) &&
         checkToken(it, 1, SYMBOL_TYPE::DOT) &&
         checkToken(it, 2, SYMBOL_TYPE::BLANK) &&
         checkToken(it, 3, SYMBOL_TYPE::STRING) &&
         isLineEnd(it, 4)) {
 
-        TokenStream::const_iterator nextToken = it + 3;
+        Iterator nextToken = it + 3;
         //render order list
         std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
             renderer->renderOrderedList((*it)->text, (*nextToken)->text);
@@ -149,10 +149,10 @@ void GrammarParser::handleNumber(TokenStream::const_iterator &it) {
         return;
     }
 
-    handleString(it);
+    handleError(it);
 }
 
-inline bool GrammarParser::isLineFirst(TokenStream::const_iterator &it) {
+inline bool GrammarParser::isLineFirst(Iterator &it) {
     if (it == mTokenStream.cbegin()) {
         return true;
     }
@@ -166,8 +166,8 @@ void GrammarParser::handleNewLine() {
     });
 }
 
-bool GrammarParser::checkToken(TokenStream::const_iterator &it, int offset, SYMBOL_TYPE type) {
-    TokenStream::const_iterator target = it + offset;
+bool GrammarParser::checkToken(Iterator &it, int offset, SYMBOL_TYPE type) {
+    Iterator target = it + offset;
     if (target < mTokenStream.cbegin() || target >= mTokenStream.cend()) {
         return false;
     }
@@ -175,12 +175,12 @@ bool GrammarParser::checkToken(TokenStream::const_iterator &it, int offset, SYMB
     return (*target)->type == type;
 }
 
-void GrammarParser::handleReference(TokenStream::const_iterator &it) {
+void GrammarParser::handleReference(Iterator &it) {
     if (isLineFirst(it) &&
         checkToken(it, 1, SYMBOL_TYPE::BLANK) &&
         checkToken(it, 2, SYMBOL_TYPE::STRING) &&
         isLineEnd(it, 3)) {
-        TokenStream::const_iterator nextToken = it + 2;
+        Iterator nextToken = it + 2;
         std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
             renderer->renderReference((*nextToken)->text);
         });
@@ -188,15 +188,15 @@ void GrammarParser::handleReference(TokenStream::const_iterator &it) {
         return;
     }
 
-    handleString(it);
+    handleError(it);
 }
 
-void GrammarParser::handleDashes(TokenStream::const_iterator &it) {
+void GrammarParser::handleDashes(Iterator &it) {
     if (isLineFirst(it) &&
         checkToken(it, 1, SYMBOL_TYPE::BLANK) &&
         checkToken(it, 2, SYMBOL_TYPE::STRING) &&
         isLineEnd(it, 3)) {
-        TokenStream::const_iterator nextToken = it + 2;
+        Iterator nextToken = it + 2;
         std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
             renderer->renderUnorderedList((*nextToken)->text);
         });
@@ -204,10 +204,10 @@ void GrammarParser::handleDashes(TokenStream::const_iterator &it) {
         return;
     }
 
-    handleString(it);
+    handleError(it);
 }
 
-void GrammarParser::handleExclamationMark(TokenStream::const_iterator &it) {
+void GrammarParser::handleExclamationMark(Iterator &it) {
     if (isLineFirst(it) &&
         checkToken(it, 1, SYMBOL_TYPE::LEFT_SQUARE_BRACKETS) &&
         checkToken(it, 2, SYMBOL_TYPE::STRING) &&
@@ -215,8 +215,8 @@ void GrammarParser::handleExclamationMark(TokenStream::const_iterator &it) {
         checkToken(it, 4, SYMBOL_TYPE::LEFT_PARENTHESES) &&
         checkToken(it, 5, SYMBOL_TYPE::STRING) &&
         checkToken(it, 6, SYMBOL_TYPE::RIGHT_PARENTHESES)) {
-        TokenStream::const_iterator label = it + 2;
-        TokenStream::const_iterator url = it + 5;
+        Iterator label = it + 2;
+        Iterator url = it + 5;
         std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
             renderer->renderImage((*label)->text, (*url)->text);
         });
@@ -224,18 +224,18 @@ void GrammarParser::handleExclamationMark(TokenStream::const_iterator &it) {
         return;
     }
 
-    handleString(it);
+    handleError(it);
 }
 
-void GrammarParser::handleLeftSquareBrackets(TokenStream::const_iterator &it) {
+void GrammarParser::handleLeftSquareBrackets(Iterator &it) {
     if (isLineFirst(it) &&
         checkToken(it, 1, SYMBOL_TYPE::STRING) &&
         checkToken(it, 2, SYMBOL_TYPE::RIGHT_SQUARE_BRACKETS) &&
         checkToken(it, 3, SYMBOL_TYPE::LEFT_PARENTHESES) &&
         checkToken(it, 4, SYMBOL_TYPE::STRING) &&
         checkToken(it, 5, SYMBOL_TYPE::RIGHT_PARENTHESES)) {
-        TokenStream::const_iterator label = it + 1;
-        TokenStream::const_iterator url = it + 4;
+        Iterator label = it + 1;
+        Iterator url = it + 4;
         std::for_each(mRenderers.begin(), mRenderers.end(), [&](MiddlewareRenderer *renderer) {
             renderer->renderLink((*label)->text, (*url)->text);
         });
@@ -243,10 +243,29 @@ void GrammarParser::handleLeftSquareBrackets(TokenStream::const_iterator &it) {
         return;
     }
 
-    handleString(it);
+    handleError(it);
 }
 
-bool GrammarParser::isLineEnd(TokenStream::const_iterator &it, int offset) {
-    TokenStream::const_iterator nextToken = it + offset;
+bool GrammarParser::isLineEnd(Iterator &it, int offset) {
+    Iterator nextToken = it + offset;
     return checkToken(it, offset, SYMBOL_TYPE::NEW_LINE) || nextToken >= mTokenStream.cend();
+}
+
+void GrammarParser::handleError(Iterator &it) {
+
+    //if the token stream is empty
+    //just ignore the error
+    if (mTokenStream.empty()) {
+        return;
+    }
+
+    Token *token = mTokenStream.back();
+    if (token->type == SYMBOL_TYPE::STRING ||
+            token->type == SYMBOL_TYPE::REFERENCE) {
+        token->text.append((*it)->text);
+        return;
+    }
+
+    //other
+    //ignore error
 }

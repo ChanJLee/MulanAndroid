@@ -10,6 +10,10 @@ cmake_minimum_required(VERSION 3.4.1)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
+IF (CMAKE_BUILD_TYPE STREQUAL Debug)
+ADD_DEFINITIONS(-DDEBUG)
+ENDIF()
+
 set(SOURCE_FILES
     src/main/cpp/com_chan_mulan_Mulan.h
     src/main/cpp/com_chan_mulan_Mulan.cpp
