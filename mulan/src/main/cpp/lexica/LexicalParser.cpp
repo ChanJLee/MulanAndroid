@@ -182,13 +182,13 @@ LexicalParser::~LexicalParser()
 inline void LexicalParser::handleDot()
 {
 	++mCursor;
-	mTokenStream.push_back(new Token(SYMBOL_TYPE ::DOT));
+	mTokenStream.push_back(new Token(SYMBOL_TYPE ::DOT, "."));
 }
 
 inline void LexicalParser::handleReference()
 {
 	++mCursor;
-	mTokenStream.push_back(new Token(SYMBOL_TYPE ::REFERENCE));
+	mTokenStream.push_back(new Token(SYMBOL_TYPE ::REFERENCE, ">"));
 }
 
 inline bool LexicalParser::eof()
@@ -209,29 +209,29 @@ inline void LexicalParser::next()
 void LexicalParser::handleExclamationMark()
 {
 	next();
-	mTokenStream.push_back(new Token(SYMBOL_TYPE ::EXCLAMATION_MARK));
+	mTokenStream.push_back(new Token(SYMBOL_TYPE ::EXCLAMATION_MARK, "!"));
 }
 
 void LexicalParser::handleLeftSquareBrackets()
 {
 	next();
-	mTokenStream.push_back(new Token(SYMBOL_TYPE ::LEFT_SQUARE_BRACKETS));
+	mTokenStream.push_back(new Token(SYMBOL_TYPE ::LEFT_SQUARE_BRACKETS, "["));
 }
 
 void LexicalParser::handleRightSquareBrackets()
 {
 	next();
-	mTokenStream.push_back(new Token(SYMBOL_TYPE ::RIGHT_SQUARE_BRACKETS));
+	mTokenStream.push_back(new Token(SYMBOL_TYPE ::RIGHT_SQUARE_BRACKETS, "]"));
 }
 
 void LexicalParser::handleLeftParentheses()
 {
 	next();
-	mTokenStream.push_back(new Token(SYMBOL_TYPE ::LEFT_PARENTHESES));
+	mTokenStream.push_back(new Token(SYMBOL_TYPE ::LEFT_PARENTHESES, "("));
 }
 
 void LexicalParser::handleRightParentheses()
 {
 	next();
-	mTokenStream.push_back(new Token(SYMBOL_TYPE ::RIGHT_PARENTHESES));
+	mTokenStream.push_back(new Token(SYMBOL_TYPE ::RIGHT_PARENTHESES, ")"));
 }

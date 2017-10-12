@@ -27,6 +27,8 @@ public:
 	{
 	}
 
+	Token(SYMBOL_TYPE type, const Text &text) : type(type), text(text) {}
+
 	Token(SYMBOL_TYPE type)
 		: type(type)
 	{}

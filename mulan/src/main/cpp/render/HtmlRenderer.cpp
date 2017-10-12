@@ -74,7 +74,7 @@ void HtmlRenderer::renderLink(const Text &label, const Text &url)
 	mStringBuilder << "<a href=\"" << url << "\">" << label << "</a>";
 }
 
-void HtmlRenderer::renderReference(const Text &content)
+void HtmlRenderer::renderReference(const Text &content, bool)
 {
 	mStringBuilder << "<span style=\"background-color:#ABB5BB;color:#ffffff;\">" << content << "</span>";
 }

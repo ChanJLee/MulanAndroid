@@ -190,11 +190,22 @@ public class MarkdownRenderer {
 		mDataList.add(lastTextureData);
 	}
 
-	public void renderReference(String content) {
+	public void renderReference(String content, boolean append) {
 		d("reference: " + content);
-		ReferenceData referenceData = new ReferenceData();
-		referenceData.texture = content;
-		mDataList.add(referenceData);
+
+		if (mDataList.isEmpty() || !append) {
+			ReferenceData referenceData = new ReferenceData();
+			referenceData.texture = content;
+			mDataList.add(referenceData);
+			return;
+		}
+		Data data = mDataList.get(mDataList.size() - 1);
+		if (!(data instanceof ReferenceData)) {
+			return;
+		}
+
+		ReferenceData referenceData = (ReferenceData) data;
+		referenceData.texture = referenceData.texture + content;
 	}
 
 	private static void d(String message) {

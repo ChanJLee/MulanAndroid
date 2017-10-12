@@ -25,7 +25,7 @@ public:
 	void renderNewLine() override;
 	void renderImage(const Text &label, const Text &url) override;
 	void renderLink(const Text &label, const Text &url) override;
-	void renderReference(const Text &content) override;
+	void renderReference(const Text &content, bool append) override;
 	void renderUnorderedList(const Text &content) override;
 };
 

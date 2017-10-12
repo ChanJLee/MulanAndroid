@@ -80,9 +80,9 @@ void AndroidRenderer::renderLink(const Text &label, const Text &url) {
                             urlHolder.toJstring());
 }
 
-void AndroidRenderer::renderReference(const Text &content) {
+void AndroidRenderer::renderReference(const Text &content, bool append) {
     RawString2JavaStringHolder holder(mJNIEnv, content);
-    mJNIEnv->CallVoidMethod(mJavaRenderer, mRenderReferenceId, holder.toJstring());
+    mJNIEnv->CallVoidMethod(mJavaRenderer, mRenderReferenceId, holder.toJstring(), append);
 }
 
 AndroidRenderer::AndroidRenderer(JNIEnv *jNIEnv, jobject &javaRenderer) : mJNIEnv(jNIEnv),
@@ -99,7 +99,7 @@ AndroidRenderer::AndroidRenderer(JNIEnv *jNIEnv, jobject &javaRenderer) : mJNIEn
     mRenderNewLineId = mJNIEnv->GetMethodID(mJavaClass, "renderNewLine", "()V");
     mRenderImageId = mJNIEnv->GetMethodID(mJavaClass, "renderImage", "(Ljava/lang/String;Ljava/lang/String;)V");
     mRenderLinkId = mJNIEnv->GetMethodID(mJavaClass, "renderLink", "(Ljava/lang/String;Ljava/lang/String;)V");
-    mRenderReferenceId = mJNIEnv->GetMethodID(mJavaClass, "renderReference", "(Ljava/lang/String;)V");
+    mRenderReferenceId = mJNIEnv->GetMethodID(mJavaClass, "renderReference", "(Ljava/lang/String;Z)V");
 
     jfieldID field = mJNIEnv->GetStaticFieldID(mJavaClass, "TITLE_SIZE_1", "I");
     mTitleSize1 = mJNIEnv->GetStaticIntField(mJavaClass, field);

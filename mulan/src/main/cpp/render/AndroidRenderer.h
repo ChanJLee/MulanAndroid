@@ -56,7 +56,7 @@ public:
 
     void renderLink(const Text &label, const Text &url) override;
 
-    void renderReference(const Text &content) override;
+    void renderReference(const Text &content, bool append) override;
 
 };
 

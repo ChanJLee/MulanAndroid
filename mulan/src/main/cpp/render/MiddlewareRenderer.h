@@ -26,7 +26,7 @@ public:
 	virtual void renderNewLine() = 0;
 	virtual void renderImage(const Text &label, const Text &url) = 0;
 	virtual void renderLink(const Text &label, const Text &url) = 0;
-	virtual void renderReference(const Text &content) = 0;
+	virtual void renderReference(const Text &content, bool append = false) = 0;
 };
 
 #endif //MARKDOWNPARSER_MIDDLEWARERENDERER_H

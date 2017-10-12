@@ -15,6 +15,20 @@ typedef TokenStream::const_iterator Iterator;
 
 class GrammarParser
 {
+    enum class STATE {
+        IDLE,
+        HASH,
+        STAR,
+        NUMBER,
+        NEW_LINE,
+        REFERENCE,
+        DASHES,
+        EXCLAMATION_MARK,
+        LEFT_SQUARE_BRACKETS,
+        STRING
+    };
+
+    STATE mCurrentState;
 	const TokenStream &mTokenStream;
 	MiddlewareRendererContainer mRenderers;
 public:
@@ -38,6 +52,7 @@ private:
 	void handleExclamationMark(Iterator &it);
 	void handleLeftSquareBrackets(Iterator &it);
 	void handleError(Iterator& it);
+	void handleOther(Iterator& it);
 };
 
 
